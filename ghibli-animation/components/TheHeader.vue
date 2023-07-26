@@ -38,9 +38,6 @@
     font-size: 27px;
     line-height: 33px;
     text-decoration: none;
-
-    /* identical to box height */
-
     color: #000000;
   }
 

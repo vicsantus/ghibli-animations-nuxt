@@ -54,4 +54,17 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  router: {
+    prefetchLinks: false, // Desabilita prefetch globalmente
+    // extendRoutes(routes, resolve) {
+    //   // Habilita prefetch apenas na rota para "/favorites"
+    //   routes.push({
+    //     path: '/favorites',
+    //     component: resolve(__dirname, 'pages/favorites.vue'),
+    //     options: {
+    //       prefetch: true,
+    //     },
+    //   })
+    // },
+  },
 }

@@ -1,44 +1,60 @@
 <template>
   <div class="container">
     <TheHeader />
-    <main>
-        <h1>Films</h1>
-        <div >
-          <section v-for="film of films" :key="film.id" className="container">
-            <img :src="film.image" :alt="film.title" />
-            <div className="overlay">
-              <h3>{film.title}</h3>
-              <p>{film.description}</p>
-              <button
-                :data-testid="`button ${film.id}`"
-                onClick="handleClick"
-                :name="film.id"
-                type="button"
-              >
-                {film.fav ? 'Disfavor' : 'Favorite'}
-              </button>
-            </div>
-          </section>
-        </div>
-      </main>
+    <RenderFilms :filmes="filmes" @favorite-toggled="handleFavoriteToggled" />
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'IndexPage',
-    data() {
-      return {
-        films: []
-      }
-    },
-    async fetch() {
-      this.films = await fetch(
-        'http://localhost:3001/'
-      ).then(res => res.json())
+import RenderFilms from '@/components/RenderFilms.vue';
+import TheHeader from '@/components/TheHeader.vue';
+
+export default {
+  name: 'IndexPage',
+
+  components: {
+    TheHeader,
+    RenderFilms,
+  },
+
+  async asyncData({ ssrContext }) {
+    let filmes = [];
+    if (process.server && !ssrContext) {
+      // Estamos no servidor durante a geração estática
+      filmes = await fetch('http://localhost:3001/').then((response) => response.json());
     }
-  }
+    return {
+      filmes,
+    };
+  },
+  
+  data() {
+    return {
+      filmes: [],
+    };
+  },
+
+  mounted() {
+    // Executar o fetch no cliente (navegação no navegador)
+    if (!this.filmes.length) {
+      this.fetchData();
+    }
+  },
+
+  methods: {
+    async fetchData() {
+      const filmes = await fetch('http://localhost:3001/').then((response) => response.json());
+      this.filmes = filmes;
+    },
+
+    handleFavoriteToggled(id) {
+      // Atualize a lista de filmes no estado local
+      this.filmes = this.filmes.map((film) => (film.id === id ? { ...film, fav: !film.fav } : film));
+    },
+  },
+};
 </script>
+
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap') ;
