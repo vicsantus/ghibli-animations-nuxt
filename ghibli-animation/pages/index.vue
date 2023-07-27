@@ -1,12 +1,11 @@
 <template>
   <div class="container">
     <TheHeader />
-    <RenderFilms :filmes="filmes" @favorite-toggled="handleFavoriteToggled" />
+    <RenderFilms :favpage="false"/>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
 import RenderFilms from '@/components/RenderFilms.vue';
 import TheHeader from '@/components/TheHeader.vue';
 
@@ -16,52 +15,6 @@ export default {
   components: {
     TheHeader,
     RenderFilms,
-  },
-
-  async asyncData({ ssrContext }) {
-    let filmes = [];
-    if (process.server && !ssrContext) {
-      // Estamos no servidor durante a geração estática
-      filmes = await fetch('http://localhost:3001/').then((response) => response.json());
-    }
-    return {
-      filmes,
-    };
-  },
-  
-  data() {
-    return {
-      filmes: [],
-    };
-  },
-  
-  computed: {
-    ...mapState({
-      filmes,
-    }),
-  },
-  
-  mounted() {
-    // Executar o fetch no cliente (navegação no navegador)
-    if (!this.filmes.length) {
-      this.fetchData();
-    }
-  },
-
-  methods: {
-    async fetchData() {
-      const filmes = await fetch('http://localhost:3001/').then((response) => response.json());
-      this.filmes = filmes;
-    },
-
-    ...mapMutations({
-      changeFilms: this.filmes,
-    }),
-
-    handleFavoriteToggled(id) {
-      // Atualize a lista de filmes no estado local
-      this.filmes = this.filmes.map((film) => (film.id === id ? { ...film, fav: !film.fav } : film));
-    },
   },
 };
 </script>

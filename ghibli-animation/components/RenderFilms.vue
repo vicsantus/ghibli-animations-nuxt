@@ -1,7 +1,7 @@
 <template>
   <main>
     <div >
-      <section v-for="film of filmes" :key="film.id" className="container">
+      <section v-for="film of filteredFilms" :key="film.id" className="container">
         <img :src="film.image" :alt="film.title" />
         <div className="overlay">
           <h3>{{film.title}}</h3>
@@ -10,7 +10,7 @@
             :data-testid="`button ${film.id}`"
             :name="film.id"
             type="button"
-            @click="handleClick(film)"
+            @click="handleClick(film.id)"
           >
             {{film.fav ? 'Disfavor' : 'Favorite'}}
           </button>
@@ -21,18 +21,34 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
   props: {
-    filmes: {
-      type: Array,
+    favpage: {
+      type: Boolean,
       required: true,
     },
   },
-  
+
+  computed: {
+    ...mapState(['filmes']),
+    filteredFilms() {
+      // Filtrar os filmes com base no valor da prop favpage
+      return this.favpage ? this.filmes.filter((film) => film.fav) : this.filmes;
+    },
+  },
+
+  async created() {
+    // Buscar os filmes apenas uma vez ao entrar na rota "home"
+    await this.fetchFilmes();
+  },
+
   methods: {
-    handleClick(film) {
-      // Emitindo o evento para notificar o componente pai (index.vue) que o botão foi clicado
-      this.$emit('favorite-toggled', film.id);
+    ...mapActions(['fetchFilmes', 'toggleFavorite']),
+    async handleClick(id) {
+      // Chamar a mutation para atualizar o estado global
+      await this.toggleFavorite(id);
     },
   },
 };

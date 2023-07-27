@@ -3,4 +3,5 @@ export interface State {
 	title: string;
 	description: string;
 	image: string;
+	fav: boolean;
 }

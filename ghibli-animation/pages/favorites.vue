@@ -1,6 +1,6 @@
 <template>
   <div>
     <TheHeader />
-    <h1>Chegamos no favorites</h1>
+    <h1>Favorites</h1>
   </div>
 </template>
