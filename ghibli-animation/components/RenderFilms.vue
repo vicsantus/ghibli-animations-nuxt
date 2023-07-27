@@ -1,6 +1,8 @@
 <template>
   <div >
+    <!-- Verifica se há filmes filtrados para mostrar -->
     <template v-if="filteredFilms.length >= 1">
+      <!-- Itera sobre a lista de filmes filtrados -->
       <section v-for="film of filteredFilms" :key="film.id" class="container">
         <img :src="film.image" :alt="film.title" />
         <div class="overlay">
@@ -16,6 +18,7 @@
         </div>
       </section>
     </template>
+    <!-- Caso não haja filmes filtrados, exibe uma mensagem -->
     <template v-else>
       <h2>No films to show...</h2>
     </template>
