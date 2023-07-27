@@ -1,12 +1,14 @@
 <template>
-  <div class="container">
+  <div>
     <TheHeader />
-    <RenderFilms :filmes="filmes" @favorite-toggled="handleFavoriteToggled" />
+    <main class="main-render-films">
+      <h1>Films</h1>
+      <RenderFilms :favpage="false"/>
+    </main>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
 import RenderFilms from '@/components/RenderFilms.vue';
 import TheHeader from '@/components/TheHeader.vue';
 
@@ -17,66 +19,86 @@ export default {
     TheHeader,
     RenderFilms,
   },
-
-  async asyncData({ ssrContext }) {
-    let filmes = [];
-    if (process.server && !ssrContext) {
-      // Estamos no servidor durante a geração estática
-      filmes = await fetch('http://localhost:3001/').then((response) => response.json());
-    }
-    return {
-      filmes,
-    };
-  },
-  
-  data() {
-    return {
-      filmes: [],
-    };
-  },
-  
-  computed: {
-    ...mapState({
-      filmes,
-    }),
-  },
-  
-  mounted() {
-    // Executar o fetch no cliente (navegação no navegador)
-    if (!this.filmes.length) {
-      this.fetchData();
-    }
-  },
-
-  methods: {
-    async fetchData() {
-      const filmes = await fetch('http://localhost:3001/').then((response) => response.json());
-      this.filmes = filmes;
-    },
-
-    ...mapMutations({
-      changeFilms: this.filmes,
-    }),
-
-    handleFavoriteToggled(id) {
-      // Atualize a lista de filmes no estado local
-      this.filmes = this.filmes.map((film) => (film.id === id ? { ...film, fav: !film.fav } : film));
-    },
-  },
 };
 </script>
 
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap') ;
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap') ;
 
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    padding-bottom: 150px;
-  }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-bottom: 150px;
+}
+
+.main-render-films {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column wrap;
+}
+
+.main-render-films div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+  gap: 2em;
+}
+
+.main-render-films h1 {
+  font-family: 'Single Day';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 45px;
+  line-height: 56px;
+  color: #000000;
+  text-shadow: 0px 4px 4px rgba(255, 255, 0, 0.75);
+}
+
+.main-render-films div section {
+  padding: 9px;
+  box-shadow: 1px 1px 1px 1px #007DF9 ;
+}
+
+.main-render-films div section p {
+  font-family: 'Single Day';
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 56px;
+  height: 160px;
+  width: 300px;
+  line-height: 0.9;
+  text-overflow: ellipsis;
+  white-space: break-spaces;
+  overflow: scroll;
+}
+
+.main-render-films div section img {
+  height: 400px;
+  width: 300px;
+}
+
+.main-render-films div section h3 {
+  font-family: 'Single Day';
+  font-weight: 400;
+  font-size: 30px;
+  overflow: scroll;
+  text-overflow: clip;
+  width: auto;
+}
+
+.main-render-films div section button {
+  font-family: 'Single Day';
+  font-weight: 400;
+  font-size: 20px;
+  border: none;
+  width: 73px;
+  border-radius: 3px;
+}
 </style>
