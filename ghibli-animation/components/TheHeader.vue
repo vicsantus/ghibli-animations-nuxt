@@ -22,11 +22,12 @@
   header {
     height: 150px;
     background: #007DF9;
+    margin-bottom: 30px;
+    padding: 15px;
   }
 
   header nav {
     display: flex;
-    padding: 15px 113px 0 113px;
     align-items: center;
     justify-content: space-between;
   }

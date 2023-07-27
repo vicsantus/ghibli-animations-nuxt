@@ -1,14 +1,13 @@
 <template>
-  <main>
-    <div >
-      <section v-for="film of filteredFilms" :key="film.id" className="container">
+  <div >
+    <template v-if="filteredFilms.length >= 1">
+      <section v-for="film of filteredFilms" :key="film.id" class="container">
         <img :src="film.image" :alt="film.title" />
-        <div className="overlay">
+        <div class="overlay">
           <h3>{{film.title}}</h3>
           <p>{{film.description}}</p>
           <button
             :data-testid="`button ${film.id}`"
-            :name="film.id"
             type="button"
             @click="handleClick(film.id)"
           >
@@ -16,8 +15,11 @@
           </button>
         </div>
       </section>
-    </div>
-  </main>
+    </template>
+    <template v-else>
+      <h2>No films to show...</h2>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -53,3 +55,42 @@ export default {
   },
 };
 </script>
+
+<style>
+.container {
+  position: relative;
+  perspective: 1000px;
+  display: inline-block;
+}
+
+.container img {
+  height: 400px;
+  width: 300px;
+  transition: transform 0.5s;
+}
+
+.container:hover img {
+  transform: rotateY(180deg);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotateY(-180deg);
+  backface-visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: transform 0.5s;
+}
+
+.container:hover .overlay {
+  transform: rotateY(0deg);
+  backface-visibility: visible;
+}
+
+</style>
