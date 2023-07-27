@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
 import RenderFilms from '@/components/RenderFilms.vue';
 import TheHeader from '@/components/TheHeader.vue';
 
@@ -33,7 +34,13 @@ export default {
       filmes: [],
     };
   },
-
+  
+  computed: {
+    ...mapState({
+      filmes,
+    }),
+  },
+  
   mounted() {
     // Executar o fetch no cliente (navegação no navegador)
     if (!this.filmes.length) {
@@ -46,6 +53,10 @@ export default {
       const filmes = await fetch('http://localhost:3001/').then((response) => response.json());
       this.filmes = filmes;
     },
+
+    ...mapMutations({
+      changeFilms: this.filmes,
+    }),
 
     handleFavoriteToggled(id) {
       // Atualize a lista de filmes no estado local
