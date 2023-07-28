@@ -33,7 +33,7 @@
   }
 
   header nav a {
-    font-family: 'Inter';
+    font-family: 'Inter', 'Courier New', Courier, monospace;
     font-style: normal;
     font-weight: 400;
     font-size: 27px;

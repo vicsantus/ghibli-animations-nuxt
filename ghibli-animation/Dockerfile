@@ -1,5 +1,5 @@
 # Usar a imagem node:16.14-alpine como base
-FROM node:16.14-alpine
+FROM node:16.14-alpine as security_provider
 
 # Mudar para o diretório de trabalho /app-frontend
 WORKDIR /app-frontend
@@ -8,7 +8,7 @@ WORKDIR /app-frontend
 COPY package*.json ./
 
 # Instalar as dependências Node
-RUN npm install
+RUN npm install --ignore-scripts
 
 # Copiar o restante dos arquivos da aplicação para o container
 COPY . .

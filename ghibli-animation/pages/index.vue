@@ -52,7 +52,7 @@ body {
 }
 
 .main-render-films h1 {
-  font-family: 'Single Day';
+  font-family: 'Single Day', 'Oxygen', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 45px;
@@ -67,10 +67,9 @@ body {
 }
 
 .main-render-films div section p {
-  font-family: 'Single Day';
+  font-family: 'Single Day', 'Oxygen', sans-serif;
   font-weight: 400;
   font-size: 20px;
-  line-height: 56px;
   height: 160px;
   width: 300px;
   line-height: 0.9;
@@ -85,7 +84,7 @@ body {
 }
 
 .main-render-films div section h3 {
-  font-family: 'Single Day';
+  font-family: 'Single Day', 'Oxygen', sans-serif;
   font-weight: 400;
   font-size: 30px;
   overflow: scroll;
@@ -94,7 +93,7 @@ body {
 }
 
 .main-render-films div section button {
-  font-family: 'Single Day';
+  font-family: 'Single Day', 'Oxygen', sans-serif;
   font-weight: 400;
   font-size: 20px;
   border: none;
