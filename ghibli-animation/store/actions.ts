@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 // Importar a interface State
 import { IFilmes, State } from "./interfaces";
+import { valueToRoute } from "./routeToFetch";
 
 // Action para buscar filmes
 export async function fetchFilmes({ commit, state }: {
@@ -11,7 +12,7 @@ export async function fetchFilmes({ commit, state }: {
   if (state.filmes.length === 0) {
     try {
       // Realizar o fetch dos filmes da API
-      const filmesFetched = await fetch('http://localhost:3001/')
+      const filmesFetched = await fetch(`${valueToRoute}`)
         .then((response) => response.json());
 
       // Mapear os filmes e adicionar a propriedade "fav" com valor false

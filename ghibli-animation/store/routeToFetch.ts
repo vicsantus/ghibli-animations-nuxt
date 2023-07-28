@@ -1,0 +1,1 @@
+export const valueToRoute = 'http://localhost:3001/';
