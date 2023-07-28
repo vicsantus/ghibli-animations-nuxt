@@ -1,5 +1,5 @@
 # Usar a imagem node:16.14-alpine como base
-FROM node:16.14-alpine as security_provider
+FROM node:16.14-alpine AS security_provider
 
 # Mudar para o diretório de trabalho /app-backend
 WORKDIR /app-backend

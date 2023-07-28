@@ -1,5 +1,4 @@
 import { Router } from 'express';
-// import validateJWT from '../auth/validateJWT';
 import FilmsController from '../controllers/Films.controller';
 
 const router = Router();
