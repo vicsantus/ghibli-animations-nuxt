@@ -13,11 +13,17 @@ class App {
     this.app.get('/', (req, res) => res.json({ ok: true }));
   }
 
-  private config():void {
-    const accessControl: express.RequestHandler = (_req, res, next) => {
-      res.header('Access-Control-Allow-Origin', '*');
-      res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,PUT,PATCH');
-      res.header('Access-Control-Allow-Headers', '*');
+  private config(): void {
+    const allowedOrigins = ['http://localhost:3000/', 'http://localhost:3000']; // Defina aqui as origens confiáveis permitidas
+    const allowedMethods = ['GET', 'POST', 'DELETE', 'OPTIONS', 'PUT', 'PATCH']; // Defina aqui os métodos permitidos
+
+    const accessControl: express.RequestHandler = (req, res, next) => {
+      const origin = req.get('origin') as string;
+      if (allowedOrigins.includes(origin)) {
+        res.header('Access-Control-Allow-Origin', origin);
+        res.header('Access-Control-Allow-Methods', allowedMethods.join(','));
+        res.header('Access-Control-Allow-Headers', '*');
+      }
       next();
     };
 
