@@ -147,7 +147,7 @@ dist
 .gen
 
 # Node dependencies
-node_packages/
+node_modules/
 
 # System files
 
